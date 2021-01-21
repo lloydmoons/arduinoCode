@@ -1,15 +1,30 @@
+//Includes ,moet je niets aan veranderen
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <DHT.h>;
 #include <SigFox.h>;
 #include <ArduinoLowPower.h>;
 
+//Wanneer je een temperatuur sensor toevoegd moet je een extra lijn toevoegen
+//Bijvoorbeeld
+//#define ONE_WIRE_BUS3 3
+//Hierbij is ONE_WIRE_BUS3 een naam die je zelf mag kiezen en 3 is de digitale pin.
+//let hierbij wel op dat je telkens dezelfde naam gebruikt.
 #define ONE_WIRE_BUS 1
 #define ONE_WIRE_BUS2 0
 
+
+//Dan voeg je de volgende lijn toe
+//OneWire oneWire3(ONE_WIRE_BUS3);
+//zorg hiervoor dat de naam tussen de haakjes hetzelfde is als de bovenstaande naam.
+//oneWire3 is de gegeven naam deze mag je weeral veranderen, maar blijf wel telkens dezelfde naam gebruiken, indien je deze hebt aangepast.
 OneWire oneWire(ONE_WIRE_BUS);
 OneWire oneWire2(ONE_WIRE_BUS2);
 
+
+//Voeg de volgend lijn toe
+//DallasTemperature sensors3(&oneWire3);
+//sensor3 is de gegeven naam deze mag je weeral veranderen, maar blijf wel telkens dezelfde naam gebruiken, indien je deze hebt aangepast.
 DallasTemperature sensors(&oneWire);
 DallasTemperature sensors2(&oneWire2);
 
@@ -50,6 +65,11 @@ void loop(void)
   temp= dht.readTemperature();
   bodemtussenstap = analogRead(sensorPin);
   bodemvochtigheid = (bodemtussenstap / 1023)*100;
+  //Voeg volgende lijn toe, hier vraag je de temperature waarde op
+  //sensors3.requestTemperatures();
+  //Celcius3=sensors3.getTempCByIndex(0);
+  //Fahrenheit3=sensors3.toFahrenheit(Celcius);
+  //indien je enkel graden celcius wilt hebben kun je de laatste lijn in commentaar laten.
   sensors.requestTemperatures(); 
   sensors2.requestTemperatures(); 
   Celcius=sensors.getTempCByIndex(0);
@@ -68,6 +88,17 @@ void loop(void)
   Serial.print("°C ");
   Serial.print(Fahrenheit2);
   Serial.println("F  ");
+
+//Temperatuur sensor3 Je kunt deze lijnen code uit commentaar halen en dan word de temperatuur getoond in de console scherm.
+//Serial.print("temperatuur3: ");
+//Serial.print(Celcius3);
+//Serial.print("°C ");
+//Serial.print(Fahrenheit3);
+//Serial.println("F  ");
+
+
+
+  
   //bodemvochtigheidsensor
   Serial.print("Bodemvochtigheid: " );
   Serial.print(bodemvochtigheid); 
@@ -85,3 +116,11 @@ void loop(void)
   Serial.println(" -------------------------------------------------------------------------------------------------" );
   delay(1000);
 }
+
+
+
+
+
+
+
+
